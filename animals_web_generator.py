@@ -14,27 +14,28 @@ def read_html_file(file_path):
 
 
 def get_all_animal_info_as_string(file_path):
-    """ Prints following information about each animal if existing:\n
+    """ Serializes following information about each animal if existing to html ul:\n
         - name
         - diet
         - location (first one in the list)
         - type """
     animals_info = load_data(file_path)
-    animals_info_str = ""
+    animals_info_str = '<ul class="cards">'
     for animal_info in animals_info:
+        animals_info_str += '<li class="cards__item">'
         if "name" in animal_info.keys():
-            name = f"Name: {animal_info["name"]}\n"
+            name = f"Name: {animal_info["name"]}<br/>\n"
             animals_info_str += name
         if "diet" in animal_info["characteristics"].keys():
-            diet = f"Diet: {animal_info["characteristics"]["diet"]}\n"
+            diet = f"Diet: {animal_info["characteristics"]["diet"]}<br/>\n"
             animals_info_str += diet
         if "locations" in animal_info.keys():
-            location = f"Location: {animal_info['locations'][0]}\n"
+            location = f"Location: {animal_info['locations'][0]}<br/>\n"
             animals_info_str += location
         if "type" in animal_info["characteristics"].keys():
-            animal_type = f"Type: {animal_info['characteristics']['type']}\n"
+            animal_type = f"Type: {animal_info['characteristics']['type']}<br/>\n"
             animals_info_str += animal_type
-        animals_info_str += "\n"
+        animals_info_str += '</li>'
     return animals_info_str
 
 
