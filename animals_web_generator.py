@@ -13,6 +13,31 @@ def read_html_file(file_path):
         return handle.read()
 
 
+def serialize_animal(animal_info):
+    """ Serializes following information about each animal if existing:\n
+        - name
+        - diet
+        - location (first one in the list)
+        - type """
+    animal_info_str = '<li class="cards__item">'
+    if "name" in animal_info.keys():
+        name = f'<div class="card__title">{animal_info["name"]}</div>'
+        animal_info_str += name
+    animal_info_str += '<p class="card__text">'
+    if "diet" in animal_info["characteristics"].keys():
+        diet = f'<strong>Diet:</strong> {animal_info["characteristics"]["diet"]}<br/>'
+        animal_info_str += diet
+    if "locations" in animal_info.keys():
+        location = f'<strong>Location:</strong> {animal_info['locations'][0]}<br/>'
+        animal_info_str += location
+    if "type" in animal_info["characteristics"].keys():
+        animal_type = f'<strong>Type:</strong> {animal_info['characteristics']['type']}<br/>'
+        animal_info_str += animal_type
+    animal_info_str += '</p>'
+    animal_info_str += '</li>'
+    return animal_info_str
+
+
 def get_all_animal_info_as_string(file_path):
     """ Serializes following information about each animal if existing to html ul:\n
         - name
@@ -20,24 +45,9 @@ def get_all_animal_info_as_string(file_path):
         - location (first one in the list)
         - type """
     animals_info = load_data(file_path)
-    animals_info_str = '<ul class="cards">'
+    animals_info_str = ''
     for animal_info in animals_info:
-        animals_info_str += '<li class="cards__item">'
-        if "name" in animal_info.keys():
-            name = f'<div class="card__title">{animal_info["name"]}</div>'
-            animals_info_str += name
-        animals_info_str += '<p class="card__text">'
-        if "diet" in animal_info["characteristics"].keys():
-            diet = f'<strong>Diet:</strong> {animal_info["characteristics"]["diet"]}<br/>'
-            animals_info_str += diet
-        if "locations" in animal_info.keys():
-            location = f'<strong>Location:</strong> {animal_info['locations'][0]}<br/>'
-            animals_info_str += location
-        if "type" in animal_info["characteristics"].keys():
-            animal_type = f'<strong>Type:</strong> {animal_info['characteristics']['type']}<br/>'
-            animals_info_str += animal_type
-        animals_info_str += '</p>'
-        animals_info_str += '</li>'
+        animals_info_str += serialize_animal(animal_info)
     return animals_info_str
 
 
