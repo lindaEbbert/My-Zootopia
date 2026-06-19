@@ -1,10 +1,15 @@
 import json
+import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
 
 
-def load_data(file_path):
-    """ Loads a JSON file """
-    with open(file_path, "r") as handle:
-        return json.load(handle)
+def load_data_from_animals_api(animal):
+    response = requests.get(f"https://api.api-ninjas.com/v1/animals?X-Api-Key={API_KEY}&name={animal}")
+    return response.json()
 
 
 def read_html_file(file_path):
@@ -44,7 +49,7 @@ def get_all_animal_info_as_string(file_path):
         - diet
         - location (first one in the list)
         - type """
-    animals_info = load_data(file_path)
+    animals_info = load_data_from_animals_api("fox")
     animals_info_str = ''
     for animal_info in animals_info:
         animals_info_str += serialize_animal(animal_info)
