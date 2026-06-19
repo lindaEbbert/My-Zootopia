@@ -43,13 +43,13 @@ def serialize_animal(animal_info):
     return animal_info_str
 
 
-def get_all_animal_info_as_string(file_path):
+def get_all_animal_info_as_string(animal):
     """ Serializes following information about each animal if existing to html ul:\n
         - name
         - diet
         - location (first one in the list)
         - type """
-    animals_info = load_data_from_animals_api("fox")
+    animals_info = load_data_from_animals_api(animal)
     animals_info_str = ''
     for animal_info in animals_info:
         animals_info_str += serialize_animal(animal_info)
@@ -58,10 +58,12 @@ def get_all_animal_info_as_string(file_path):
 
 def main():
     html_template = read_html_file("animals_template.html")
-    animals_info = get_all_animal_info_as_string("animals_data.json")
+    animal = input("Enter a name of an animal: ")
+    animals_info = get_all_animal_info_as_string(animal)
     html_output = html_template.replace("__REPLACE_ANIMALS_INFO__", animals_info)
     with open("animals.html", "w") as handle:
         handle.write(html_output)
+
 
 if __name__ == "__main__":
     main()
