@@ -50,6 +50,8 @@ def get_all_animal_info_as_string(animal):
         - location (first one in the list)
         - type """
     animals_info = load_data_from_animals_api(animal)
+    if not animals_info:
+        return f"<h2>Your animal „{animal}“ doesn't exist.</h2>"
     animals_info_str = ''
     for animal_info in animals_info:
         animals_info_str += serialize_animal(animal_info)
