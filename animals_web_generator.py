@@ -1,15 +1,4 @@
-import json
-import requests
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-API_KEY = os.getenv("API_KEY")
-
-
-def load_data_from_animals_api(animal):
-    response = requests.get(f"https://api.api-ninjas.com/v1/animals?X-Api-Key={API_KEY}&name={animal}")
-    return response.json()
+from data_fetcher import fetch_data
 
 
 def read_html_file(file_path):
@@ -49,7 +38,7 @@ def get_all_animal_info_as_string(animal):
         - diet
         - location (first one in the list)
         - type """
-    animals_info = load_data_from_animals_api(animal)
+    animals_info = fetch_data(animal)
     if not animals_info:
         return f"<h2>Your animal „{animal}“ doesn't exist.</h2>"
     animals_info_str = ''
